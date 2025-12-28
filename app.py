@@ -93,10 +93,7 @@ if template_file and font_file and excel_file:
     st.subheader("4. Generate")
     if st.button("Generate ZIP", width='stretch'):
         with st.spinner("Building all certificates..."):
-            final_zip = create_final_bundle(
-                normal_list, desc_list, off_n, off_d, 
-                template_img, loaded_font, text_color
-            )
+            final_zip = create_final_bundle(normal_list, desc_list, template_img, loaded_font, text_color, off_n, off_d)
             
             st.success("All certificates generated successfully!")
             st.download_button(
@@ -108,3 +105,4 @@ if template_file and font_file and excel_file:
 else:
 
     st.warning("* Please upload all three files to proceed.")
+
