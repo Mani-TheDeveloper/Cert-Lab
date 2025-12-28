@@ -26,7 +26,7 @@ def generate_certificate_image(name, offset, template_img, font, text_color):
     draw.text((left1, top1), name, font=font, fill=text_color)
     return certificate
 
-def create_final_bundle(normal_names, desc_names, template_img, loaded_font, color, off_norm=0, off_desc=0,):
+def create_final_bundle(normal_names, desc_names, template_img, loaded_font, color, off_norm, off_desc):
     zip_buffer = io.BytesIO()
     
     if template_img.mode in ("RGBA", "LA"):
@@ -60,4 +60,5 @@ def create_final_bundle(normal_names, desc_names, template_img, loaded_font, col
                 
     zip_buffer.seek(0)
     return zip_buffer
+
 
