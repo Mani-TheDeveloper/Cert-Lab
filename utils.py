@@ -26,7 +26,7 @@ def generate_certificate_image(name, offset, template_img, font, text_color):
     draw.text((left1, top1), name, font=font, fill=text_color)
     return certificate
 
-def create_final_bundle(normal_names, desc_names, off_norm, off_desc, template_img, loaded_font, color):
+def create_final_bundle(normal_names, desc_names, off_norm=0, off_desc=0, template_img, loaded_font, color):
     zip_buffer = io.BytesIO()
     
     if template_img.mode in ("RGBA", "LA"):
@@ -43,19 +43,20 @@ def create_final_bundle(normal_names, desc_names, off_norm, off_desc, template_i
     
     with zipfile.ZipFile(zip_buffer, "a", zipfile.ZIP_DEFLATED, False) as zip_file:
         for name_list, offset in tasks:
-            for name in name_list:
-                
-                img = generate_certificate_image(name, offset, base_template, loaded_font, color)
-                
-                safe_name = "".join(c for c in name if c.isalnum() or c in " _-").rstrip()
-                
-                img_bytes_io = io.BytesIO()
-                img.save(img_bytes_io, format="PNG")
-                img_data = img_bytes_io.getvalue()
-                
-                # Internal folder structure per your requirement
-                zip_file.writestr(f"{safe_name}/{safe_name}.png", img_data)
-                zip_file.writestr(f"{safe_name}/{safe_name}.pdf", img2pdf.convert(img_data))
+            if len(name_list) != 0:
+                for name in name_list:
+                    
+                    img = generate_certificate_image(name, offset, base_template, loaded_font, color)
+                    
+                    safe_name = "".join(c for c in name if c.isalnum() or c in " _-").rstrip()
+                    
+                    img_bytes_io = io.BytesIO()
+                    img.save(img_bytes_io, format="PNG")
+                    img_data = img_bytes_io.getvalue()
+                    
+                    # Internal folder structure per your requirement
+                    zip_file.writestr(f"{safe_name}/{safe_name}.png", img_data)
+                    zip_file.writestr(f"{safe_name}/{safe_name}.pdf", img2pdf.convert(img_data))
                 
     zip_buffer.seek(0)
     return zip_buffer
