@@ -5,7 +5,7 @@ from utils import create_final_bundle, generate_certificate_image, has_descender
 
 favicon = Image.open("favicon.png")
 
-st.set_page_config(page_title="Certificate Generator", page_icon=favicon, layout="wide")
+st.set_page_config(page_title="Cert Lab", page_icon=favicon, layout="wide")
 
 st.title("Certificate Generator")
 st.markdown("Upload assets, calibrate positions, and download your certificates.")
@@ -106,4 +106,5 @@ if template_file and font_file and excel_file:
                 mime="application/zip"
             )
 else:
+
     st.warning("* Please upload all three files to proceed.")
