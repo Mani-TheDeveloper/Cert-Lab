@@ -77,6 +77,7 @@ if template_file and font_file and excel_file:
     
     with c1:
         st.info(f"Normal Names: {len(normal_list)}")
+        off_n = 0
         if normal_list:
             off_n = st.number_input("Offset (Normal)", value=0, step=5)
             img_norm = generate_certificate_image(normal_list[0], off_n, template_img, loaded_font, text_color)
@@ -84,6 +85,7 @@ if template_file and font_file and excel_file:
 
     with c2:
         st.info(f"Descender Names: {len(desc_list)}")
+        off_d = 0
         if desc_list:
             off_d = st.number_input("Offset (Descender)", value=0, step=5)
             img_desc = generate_certificate_image(desc_list[0], off_d, template_img, loaded_font, text_color)
@@ -94,7 +96,6 @@ if template_file and font_file and excel_file:
     if st.button("Generate ZIP", width='stretch'):
         with st.spinner("Building all certificates..."):
             final_zip = create_final_bundle(normal_list, desc_list, template_img, loaded_font, text_color, off_n, off_d)
-            
             st.success("All certificates generated successfully!")
             st.download_button(
                 label="Download All Certificates (One ZIP)",
@@ -105,4 +106,5 @@ if template_file and font_file and excel_file:
 else:
 
     st.warning("* Please upload all three files to proceed.")
+
 
